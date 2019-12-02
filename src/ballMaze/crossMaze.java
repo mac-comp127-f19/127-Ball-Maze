@@ -12,7 +12,7 @@ public class crossMaze {
 
     private CanvasWindow canvas;
     private Ball ball;
-    private Rectangle demoMaze;
+    private Maze demoMaze;
     private GraphicsText lostText = new GraphicsText("Game Over!!!");
     private List<GraphicsObject> objects = new ArrayList<>();
     private static final int CANVAS_WIDTH = 1000;
@@ -29,7 +29,7 @@ public class crossMaze {
 
     public void gameoperation(){
 
-        this.ball = new Ball(500, 300, 20, 20);
+        this.ball = new Ball(500, 300, 20, canvas, demoMaze);
         canvas.add(ball);
         this.demoMaze = new Maze(300, 200, 400, 300);
         canvas.add(demoMaze);
@@ -41,7 +41,6 @@ public class crossMaze {
             {ball.setCenter(currentpositionX = i.getPosition().getX(),
                     currentpositionY = i.getPosition().getY());}
         });
-
         this.currentpositionX = ball.getX();
         this.currentpositionY = ball.getY();
         judgetouchment();
