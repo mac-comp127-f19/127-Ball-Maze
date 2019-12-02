@@ -12,6 +12,7 @@ public class Ball extends Ellipse {
     private double width;
     private double height;
     private double dx;
+    private double sy;
     private double dy;
     private CanvasWindow canvasWindow;
     private Maze maze;
