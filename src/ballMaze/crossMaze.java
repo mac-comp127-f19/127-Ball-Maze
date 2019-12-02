@@ -34,32 +34,32 @@ public class crossMaze {
         this.demoMaze = new Maze(300, 200, 400, 300);
         canvas.add(demoMaze);
         ballmovement();
-
     }
 
     public void ballmovement(){
-
-
         canvas.onDrag(i -> {
             {ball.setCenter(currentpositionX = i.getPosition().getX(),
                     currentpositionY = i.getPosition().getY());}
         });
+
+        this.currentpositionX = ball.getX();
+        this.currentpositionY = ball.getY();
+        judgetouchment();
+
     }
 
-//    public boolean judgetouchment(){
-//        GraphicsObject object = canvas.getElementAt(
-//                currentpositionX + ball.getWidth(), currentpositionY);
-//        objects.add(object);
-//        for (GraphicsObject maze : objects){
-//            if (maze instanceof Maze){
-//                canvas.closeWindow();
-//
-//            }
-//
-//        }
-//
-//
-//    }
+    public boolean judgetouchment(){
+        GraphicsObject object = canvas.getElementAt(
+                currentpositionX + ball.getWidth(), currentpositionY);
+        objects.add(object);
+        System.out.println(objects);
+        for (GraphicsObject maze : objects){
+            if (maze instanceof Maze){
+                canvas.closeWindow();
+            }
+        }
+        return false;
+    }
 
 
     public static void main(String[] args) {
