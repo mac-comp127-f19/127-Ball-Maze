@@ -19,6 +19,7 @@ public class crossMaze {
     private static final int CANVAS_HEIGHT = 1000;
     private double currentpositionX;
     private double currentpositionY;
+    private WallManager wallManager;
 
     public crossMaze(){
 
@@ -31,8 +32,10 @@ public class crossMaze {
 
         this.ball = new Ball(500, 300, 20, canvas);
         canvas.add(ball);
-        this.demoMaze = new Maze(300, 200, 400, 300);
-        canvas.add(demoMaze);
+        this.wallManager = new WallManager(canvas);
+        wallManager.createWall();
+//        this.demoMaze = new Maze(300, 200, 400, 300);
+//        canvas.add(demoMaze);
         ballmovement();
     }
 
@@ -43,21 +46,32 @@ public class crossMaze {
         });
         this.currentpositionX = ball.getX();
         this.currentpositionY = ball.getY();
-        judgetouchment();
+        if (!judgetouchment()){
+            canvas.closeWindow();
+        }
 
     }
 
     public boolean judgetouchment(){
-        GraphicsObject object = canvas.getElementAt(
+        GraphicsObject object1 = canvas.getElementAt(
                 currentpositionX + ball.getWidth(), currentpositionY);
-        objects.add(object);
+        GraphicsObject object2 = canvas.getElementAt(
+                currentpositionX, currentpositionY);
+        GraphicsObject object3 = canvas.getElementAt(
+                currentpositionX, currentpositionY + ball.getHeight());
+        GraphicsObject object4 = canvas.getElementAt(
+                currentpositionX + ball.getWidth(), currentpositionY + ball.getHeight());
+        objects.add(object1);
+        objects.add(object2);
+        objects.add(object3);
+        objects.add(object4);
         System.out.println(objects);
-        for (GraphicsObject maze : objects){
-            if (maze instanceof Maze){
-                canvas.closeWindow();
+        for (GraphicsObject object : objects){
+            if (object instanceof Wall){
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
 
