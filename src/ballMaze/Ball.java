@@ -19,7 +19,7 @@ public class Ball extends Ellipse {
     private double boundWidth;
     private double boundHeight;
 
-    public Ball(double x, double y, double r, CanvasWindow canvasWindow, Maze maze) {
+    public Ball(double x, double y, double r, CanvasWindow canvasWindow) {
         super(x, y, 2 * r, 2 * r);
         this.x = x;
         this.y = y;
@@ -29,8 +29,8 @@ public class Ball extends Ellipse {
         this.canvasWindow = canvasWindow;
         dx = 0.05;
         dy = 0.05;
-        boundHeight = canvasWindow.getHeight() + maze.getHeight();
-        boundWidth = canvasWindow.getWidth() + maze.getWidth();
+//        boundHeight = canvasWindow.getHeight() + maze.getHeight();
+//        boundWidth = canvasWindow.getWidth() + maze.getWidth();
         this.maze = maze;
     }
 
@@ -38,15 +38,15 @@ public class Ball extends Ellipse {
     /**
      * Updates the position of the ball if it's inside the box.
      */
-    public void move(double dt) {
-        if (x > maze.getX() && x < maze.getX() + maze.getWidth() && y > maze.getY() && y < maze.getY() + maze.getHeight()) {
-            x = x + dx * dt;
-            y = y + dy * dt;
-            this.setCenter(x, y);
-            dy -= GRAVITY * dt;
-        }
-        System.out.println("--------ERROR: OUT OF BOUND---------");
-    }
+//    public void move(double dt) {
+//        if (x > maze.getX() && x < maze.getX() + maze.getWidth() && y > maze.getY() && y < maze.getY() + maze.getHeight()) {
+//            x = x + dx * dt;
+//            y = y + dy * dt;
+//            this.setCenter(x, y);
+//            dy -= GRAVITY * dt;
+//        }
+//        System.out.println("--------ERROR: OUT OF BOUND---------");
+//    }
 
     public double getR() {
         return r;

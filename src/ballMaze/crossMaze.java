@@ -29,7 +29,7 @@ public class crossMaze {
 
     public void gameoperation(){
 
-        this.ball = new Ball(500, 300, 20, canvas, demoMaze);
+        this.ball = new Ball(500, 300, 20, canvas);
         canvas.add(ball);
         this.demoMaze = new Maze(300, 200, 400, 300);
         canvas.add(demoMaze);
