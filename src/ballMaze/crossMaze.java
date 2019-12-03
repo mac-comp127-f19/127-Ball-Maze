@@ -37,6 +37,7 @@ public class crossMaze {
 //        this.demoMaze = new Maze(300, 200, 400, 300);
 //        canvas.add(demoMaze);
         ballmovement();
+        System.out.println( "it's" + currentpositionX + currentpositionY);
     }
 
     public void ballmovement(){
@@ -47,20 +48,20 @@ public class crossMaze {
         this.currentpositionX = ball.getX();
         this.currentpositionY = ball.getY();
         if (!judgetouchment()){
-            canvas.closeWindow();
+            System.out.println("L0st !!!");
         }
 
     }
 
     public boolean judgetouchment(){
         GraphicsObject object1 = canvas.getElementAt(
-                currentpositionX + ball.getWidth(), currentpositionY);
+                currentpositionX + ball.getWidth() / 2, currentpositionY);
         GraphicsObject object2 = canvas.getElementAt(
-                currentpositionX, currentpositionY);
+                currentpositionX + ball.getWidth() / 2, currentpositionY + ball.getHeight());
         GraphicsObject object3 = canvas.getElementAt(
-                currentpositionX, currentpositionY + ball.getHeight());
+                currentpositionX, currentpositionY + ball.getHeight() / 2);
         GraphicsObject object4 = canvas.getElementAt(
-                currentpositionX + ball.getWidth(), currentpositionY + ball.getHeight());
+                currentpositionX + ball.getWidth(), currentpositionY + ball.getHeight() / 2);
         objects.add(object1);
         objects.add(object2);
         objects.add(object3);
