@@ -37,7 +37,7 @@ public class crossMaze {
 //        this.demoMaze = new Maze(300, 200, 400, 300);
 //        canvas.add(demoMaze);
         ballmovement();
-        System.out.println( "it's" + currentpositionX + currentpositionY);
+        System.out.println( "it's" + "" + currentpositionX + "" + currentpositionY );
     }
 
     public void ballmovement(){
