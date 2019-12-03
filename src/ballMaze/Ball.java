@@ -27,8 +27,8 @@ public class Ball extends Ellipse {
         width = 2 * r;
         height = 2 * r;
         this.canvasWindow = canvasWindow;
-        dx = 0.05;
-        dy = 0.05;
+        dx = 5;
+        dy = 5;
 //        boundHeight = canvasWindow.getHeight() + maze.getHeight();
 //        boundWidth = canvasWindow.getWidth() + maze.getWidth();
         this.maze = maze;
@@ -38,15 +38,12 @@ public class Ball extends Ellipse {
     /**
      * Updates the position of the ball if it's inside the box.
      */
-//    public void move(double dt) {
-//        if (x > maze.getX() && x < maze.getX() + maze.getWidth() && y > maze.getY() && y < maze.getY() + maze.getHeight()) {
-//            x = x + dx * dt;
-//            y = y + dy * dt;
-//            this.setCenter(x, y);
-//            dy -= GRAVITY * dt;
-//        }
-//        System.out.println("--------ERROR: OUT OF BOUND---------");
-//    }
+    public void move() {
+        x += dx;
+        y += dy;
+        System.out.println(x + "   " + y);
+        this.setCenter(x, y);
+    }
 
     public double getR() {
         return r;

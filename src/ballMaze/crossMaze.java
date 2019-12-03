@@ -32,20 +32,23 @@ public class crossMaze {
 
         this.ball = new Ball(500, 300, 20, canvas);
         canvas.add(ball);
+        canvas.animate(() -> {ball.move();});
         this.wallManager = new WallManager(canvas);
         wallManager.createWall();
 //        this.demoMaze = new Maze(300, 200, 400, 300);
 //        canvas.add(demoMaze);
-        ballmovement();
+//        ballmovement();
     }
 
     public void ballmovement(){
         canvas.onDrag(i -> {
             {ball.setCenter(currentpositionX = i.getPosition().getX(),
-                    currentpositionY = i.getPosition().getY());}
+                    currentpositionY = i.getPosition().getY());
+            this.currentpositionX = ball.getX();
+            this.currentpositionY = ball.getY();
+            System.out.println(ball.getX() + "   " + ball.getY());}
         });
-        this.currentpositionX = ball.getX();
-        this.currentpositionY = ball.getY();
+
         if (!judgetouchment()){
             canvas.closeWindow();
         }
