@@ -19,13 +19,14 @@ public class WallManager {
     }
 
     public void createWall(){
-        Wall wall = new Wall(canvas.getWidth()/2,
-                            canvas.getHeight() * 2 / 3,
-                            canvas.getWidth()/50,
-                        canvas.getHeight()/3);
+        Wall wall = new Wall(500, 700, 20, 300);
         wall.setFillColor(green);
         wall.setStrokeColor(green);
         wallList.add(wall);
         canvas.add(wall);
+    }
+
+    public List<Wall> getWallList(){
+        return wallList;
     }
 }

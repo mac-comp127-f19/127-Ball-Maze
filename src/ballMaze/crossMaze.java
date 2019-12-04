@@ -1,11 +1,10 @@
 package ballMaze;
 
-import comp127graphics.CanvasWindow;
-import comp127graphics.GraphicsObject;
-import comp127graphics.GraphicsText;
-import comp127graphics.Rectangle;
+import comp127graphics.*;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class crossMaze {
@@ -29,16 +28,64 @@ public class crossMaze {
     }
 
     public void gameoperation(){
+        this.ball = new Ball(500, 300, 10, canvas);
+//        System.out.println(ball.getPosition()); // upper left corner.
+//        System.out.println(ball.getCenter()); // the REAL center, not upper left corner.
+//        System.out.println(ball.getX()); // centerX
+//        System.out.println(ball.getR());
+//        System.out.println("lower right corner is: " + (ball.getR() + ball.getX()));
 
-        this.ball = new Ball(500, 300, 20, canvas);
         canvas.add(ball);
-        canvas.animate(() -> {ball.move();});
+        canvas.animate(() -> {gameIsRunning();
+                    System.out.println(ball.getPosition());}
+//                this::gameIsRunning
+        );
         this.wallManager = new WallManager(canvas);
         wallManager.createWall();
-//        this.demoMaze = new Maze(300, 200, 400, 300);
-//        canvas.add(demoMaze);
-//        ballmovement();
     }
+
+    /**
+     * Evaluates whether the ball is moving or hit with something.
+     * If it should stop, then it's dx and dy is set to be 0.
+     */
+    public void gameIsRunning(){
+        /* TODO: make the ball slide according to different situations, i.e.,
+            sliding on the wall or sliding on the wall of the canvas. */
+        ball.move();
+        if (!touchWithWall()){
+            ball.stop();
+        }
+//        ball.move();
+    }
+
+    /**
+     * Evaluate four midpoints of the ball to see whether they touch with a wall.
+     */
+    public boolean touchWithWall(){
+        Point up = new Point(ball.getX(), ball.getY() - ball.getR());
+        Point down = new Point(ball.getX(), ball.getY() + ball.getR());
+        Point left = new Point(ball.getX() -  ball.getR(), ball.getY());
+        Point right = new Point(ball.getX() + ball.getR(), ball.getY());
+        List<Point> points = new ArrayList<>(Arrays.asList(up, down, left, right));
+
+        for (Point point : points) {
+            for (Wall i : wallManager.getWallList()){
+                if (canvas.getElementAt(point) == i) {
+                    System.out.println(point);
+                    System.out.println(i);
+                    ball.stop();
+                    // TODO: change dx and dy to a reasonable value so that the ball could slide on the wall.
+                    return false;
+                }
+        }}
+        return true;
+    }
+
+
+
+
+
+
 
     public void ballmovement(){
         canvas.onDrag(i -> {
