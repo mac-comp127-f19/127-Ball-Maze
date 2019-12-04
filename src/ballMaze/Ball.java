@@ -3,11 +3,14 @@ package ballMaze;
 import comp127graphics.CanvasWindow;
 import comp127graphics.Ellipse;
 
+import java.awt.*;
+
 /**
  * Creates a ball object. The ball will update its position every second as time goes.
  */
 public class Ball extends Ellipse {
-    public static final double GRAVITY = -0.01;
+    private static final Color darkRed = new Color(48, 19, 5, 255);
+    public static final double GRAVITY = -0.005;
 
     private double x;
     private double y;
@@ -15,41 +18,29 @@ public class Ball extends Ellipse {
     private double width;
     private double height;
     private double dx;
-    private double sy;
     private double dy;
-    private CanvasWindow canvas;
-    private Maze maze;
-    private double boundWidth;
-    private double boundHeight;
 
-    public Ball(double x, double y, double r, CanvasWindow canvas) {
+    public Ball(double x, double y, double r) {
         super(x, y, 2 * r, 2 * r);
         this.x = x;
         this.y = y;
         this.r = r;
         width = 2 * r;
         height = 2 * r;
-        this.canvas = canvas;
         dx = 0.5;
         dy = -0.5;
-//        boundHeight = canvas.getHeight() + maze.getHeight();
-//        boundWidth = canvas.getWidth() + maze.getWidth();
-        this.maze = maze;
+
+        this.setFillColor(darkRed);
     }
 
     /**
-     * Updates the position of the ball if it's inside the box.
+     * Updates the position of the ball. Gravity assigned.
      */
     public void move() {
-        if (x > 0 && x < canvas.getWidth() && y > 0 && y < canvas.getHeight()){
             x += dx;
             y += dy;
             this.setCenter(x, y);
             dy -= GRAVITY;
-        }
-        else{
-            stop();
-        }
     }
 
     /**
@@ -61,6 +52,21 @@ public class Ball extends Ellipse {
         this.setCenter(x, y);
     }
 
+    /**
+     * Makes the ball slide horizontally by slowly decreasing dx.
+     */
+    public void slideHorizontally(){
+        dy = 0;
+        if (dx > 0) {
+            dx -= 0.001;
+        }
+        if (dx < 0){
+            dx += 0.001;
+        }
+        if (dx ==0){
+            this.stop();
+        }
+    }
 
 
     public double getR() {
@@ -73,6 +79,14 @@ public class Ball extends Ellipse {
 
     public double getY() {
         return y + r;
+    }
+
+    public void setDx(double dx){
+        this.dx = dx;
+    }
+
+    public void setDy(double dy){
+        this.dy = dy;
     }
 
 }

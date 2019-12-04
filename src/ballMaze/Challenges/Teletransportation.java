@@ -1,4 +1,4 @@
-package ballMaze;
+package ballMaze.Challenges;
 
 /**
  * Teletransportation point in our maze.

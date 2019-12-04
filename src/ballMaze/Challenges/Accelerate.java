@@ -1,4 +1,4 @@
-package ballMaze;
+package ballMaze.Challenges;
 
 /**
  * A given region that the ball will experience

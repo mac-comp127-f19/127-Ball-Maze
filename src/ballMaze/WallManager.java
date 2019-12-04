@@ -16,15 +16,44 @@ public class WallManager {
 
     public WallManager(CanvasWindow canvas){
         this.canvas = canvas;
+        createBottomRMiddleVerticalWall();
+//        createBottomRightVerticalWall();
+//        createRightSideHorizontalWall();
     }
 
-    public void createWall(){
-        Wall wall = new Wall(500, 700, 20, 300);
+    /**
+     * creates a vertical green wall settled at the bottom of the canvas.
+     */
+    public void createBottomRMiddleVerticalWall(){
+        Wall wall = new Wall(650, 200, 20, 800);
         wall.setFillColor(green);
         wall.setStrokeColor(green);
         wallList.add(wall);
         canvas.add(wall);
     }
+
+    /**
+     * creates a vertical green wall settled at the bottom of the canvas.
+     */
+    public void createBottomRightVerticalWall(){
+        Wall wall = new Wall(700, 500, 20, 500);
+        wall.setFillColor(green);
+        wall.setStrokeColor(green);
+        wallList.add(wall);
+        canvas.add(wall);
+    }
+
+    /**
+     * creates a horizontal green wall settled at the right side of the canvas.
+     */
+    public void createRightSideHorizontalWall(){
+        Wall wall = new Wall(300, 500, 700, 20);
+        wall.setFillColor(green);
+        wall.setStrokeColor(green);
+        wallList.add(wall);
+        canvas.add(wall);
+    }
+
 
     public List<Wall> getWallList(){
         return wallList;

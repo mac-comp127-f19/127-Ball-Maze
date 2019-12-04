@@ -1,4 +1,4 @@
-package ballMaze;
+package ballMaze.Challenges;
 
 /**
  * Enemies wandering in the maze.

@@ -1,4 +1,4 @@
-package ballMaze;
+package ballMaze.Challenges;
 
 /**
  * Bounce the ball back when it hits a wall

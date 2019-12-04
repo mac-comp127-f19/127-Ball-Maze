@@ -3,6 +3,8 @@ package ballMaze;
 import comp127graphics.CanvasWindow;
 import comp127graphics.Rectangle;
 
+import java.awt.*;
+
 public class Wall extends Rectangle {
     private double width;
     private double height;
