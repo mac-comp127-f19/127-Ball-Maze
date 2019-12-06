@@ -20,6 +20,8 @@ public class Ball extends Ellipse {
     private double dx;
     private double dy;
 
+
+
     public Ball(double x, double y, double r) {
         super(x, y, 2 * r, 2 * r);
         this.x = x;
@@ -66,6 +68,34 @@ public class Ball extends Ellipse {
         if (dx ==0){
             this.stop();
         }
+    }
+
+    public void speedafterhitting(double direction){
+        if (direction == 1){
+            x += dx;
+            y += dy;
+            this.setCenter(x, y);
+            y -= GRAVITY;
+        }
+        else if (direction == 2){
+            x -= dx;
+            y += dy;
+            this.setCenter(x, y);
+            y -= GRAVITY;
+
+        }
+        else if (direction == 3){
+            y += dy;
+            this.setCenter(x, y);
+            y += GRAVITY;
+        }
+        else if (direction == 4){
+            y += dy;
+            this.setCenter(x, y);
+            y -= GRAVITY;
+        }
+
+
     }
 
 

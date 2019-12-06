@@ -18,6 +18,7 @@ public class crossMaze {
     private double currentpositionX;
     private double currentpositionY;
     private WallManager wallManager;
+    private Hitter hitter;
 
     public crossMaze() {
         canvas = new CanvasWindow("Ball Maze", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -25,12 +26,16 @@ public class crossMaze {
         this.wallManager = new WallManager(canvas);
 
         this.ball = new Ball(500, 300, 10);
+
+        this.hitter = new Hitter(400, 200, 40, 10);
+
 //        System.out.println(ball.getPosition()); // upper left corner.
 //        System.out.println(ball.getCenter()); // the REAL center, not upper left corner.
 //        System.out.println(ball.getX()); // centerX
 //        System.out.println("lower right corner is: " + (ball.getR() + ball.getX()));
 
         canvas.add(ball);
+        canvas.add(hitter);
         canvas.animate(() -> {
                     operateGame();
 //                    System.out.println(ball.getPosition());
@@ -45,6 +50,7 @@ public class crossMaze {
      */
     public void operateGame() {
         ball.move();
+        hittermove();
         if (touchWithSidesOfWall()) {
             ball.setDx(0);
         }
@@ -117,9 +123,30 @@ public class crossMaze {
         return false;
     }
 
+    public boolean touchwithhitter(){
+        Point touch = new Point(hitter.getx(), hitter.gety());
+
+        if (canvas.getElementAt(touch) == ball){
+            return true;
+        }
+        return false;
+    }
+
+    public void hittermove(){
+        canvas.onDrag(i -> {
+            {
+                hitter.setCenter(currentpositionX = i.getPosition().getX(),
+                        currentpositionY = i.getPosition().getY());
+            }
+            });
+    }
+
+
     public static void main(String[] args) {
         new crossMaze();
     }
+
+
 
 
     // --------------other methods that're not implemented to some reason-------------------
