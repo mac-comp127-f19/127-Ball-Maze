@@ -18,7 +18,7 @@ public class crossMaze {
     private double currentpositionX;
     private double currentpositionY;
     private WallManager wallManager;
-    private Hitter hitter;
+    private Paddle paddle;
 
     public crossMaze() {
         canvas = new CanvasWindow("Ball Maze", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -27,21 +27,13 @@ public class crossMaze {
 
         this.ball = new Ball(500, 300, 10);
 
-        this.hitter = new Hitter(400, 200, 40, 10);
+        this.paddle = new Paddle(400, 200, 40, 10);
 
-//        System.out.println(ball.getPosition()); // upper left corner.
-//        System.out.println(ball.getCenter()); // the REAL center, not upper left corner.
-//        System.out.println(ball.getX()); // centerX
-//        System.out.println("lower right corner is: " + (ball.getR() + ball.getX()));
-
+        canvas.draw();
         canvas.add(ball);
-        canvas.add(hitter);
-        canvas.animate(() -> {
-                    operateGame();
-//                    System.out.println(ball.getPosition());
-                }
-        );
-
+        canvas.add(paddle);
+        canvas.animate(() -> operateGame());
+        canvas.onMouseMove(event -> paddle.move(event.getPosition()));
     }
 
     /**
@@ -50,7 +42,7 @@ public class crossMaze {
      */
     public void operateGame() {
         ball.move();
-        hittermove();
+//        paddleMove();
         if (touchWithSidesOfWall()) {
             ball.setDx(0);
         }
@@ -60,6 +52,7 @@ public class crossMaze {
         if (touchWithCanvas()) {
             ball.slideHorizontally();
         }
+
     }
 
     /**
@@ -123,30 +116,24 @@ public class crossMaze {
         return false;
     }
 
-    public boolean touchwithhitter(){
-        Point touch = new Point(hitter.getx(), hitter.gety());
-
-        if (canvas.getElementAt(touch) == ball){
+    public boolean touchWithPaddle() {
+        Point touch = new Point(paddle.getx(), paddle.gety());
+        if (canvas.getElementAt(touch) == ball) {
             return true;
         }
         return false;
     }
 
-    public void hittermove(){
-        canvas.onDrag(i -> {
-            {
-                hitter.setCenter(currentpositionX = i.getPosition().getX(),
-                        currentpositionY = i.getPosition().getY());
-            }
-            });
-    }
+//    public void paddleMove() {
+//        canvas.onMouseMove(i -> {
+//            paddle.move(i.getPosition());
+//        });
+//    }
 
 
     public static void main(String[] args) {
         new crossMaze();
     }
-
-
 
 
     // --------------other methods that're not implemented to some reason-------------------
