@@ -25,9 +25,9 @@ public class crossMaze {
 
         this.wallManager = new WallManager(canvas);
 
-        this.ball = new Ball(500, 300, 10);
+        this.ball = new Ball(100, 300, 10, 10, 10);
 
-        this.paddle = new Paddle(400, 200, 40, 10);
+        this.paddle = new Paddle(400, 200, 50, 50);
 
         canvas.draw();
         canvas.add(ball);
@@ -41,16 +41,31 @@ public class crossMaze {
      * If it should stop, then it's dx and dy is set to be 0.
      */
     public void operateGame() {
-        ball.move();
-//        paddleMove();
-        if (touchWithSidesOfWall()) {
+        ball.move(0.1);
+        ball.hitwall(0.1);
+        if (touchWithSidesOfWall()){
             ball.setDx(0);
-        }
-        if (touchWithTopOrBottomOfWall()) {
-            ball.slideHorizontally();
         }
         if (touchWithCanvas()) {
             ball.slideHorizontally();
+        }
+        if (touchWithWall()){
+            ball.slideHorizontally();
+        }
+        if (touchWithPaddleFront(ball)){
+            ball.hit(1, 0.1);
+        }
+
+        if (touchWithPaddleUp(ball)){
+            ball.hit(3, 0.1);
+        }
+
+        if (touchWithPaddleBack(ball)){
+            ball.hit(2, 0.1);
+        }
+
+        if (touchWithPaddleDown(ball)){
+            ball.hit(4, 0.1);
         }
 
     }
@@ -75,6 +90,8 @@ public class crossMaze {
         }
         return false;
     }
+
+
 
     /**
      * Evaluates the top and bottom midpoints of the ball
@@ -116,19 +133,31 @@ public class crossMaze {
         return false;
     }
 
-    public boolean touchWithPaddle() {
-        Point touch = new Point(paddle.getx(), paddle.gety());
-        if (canvas.getElementAt(touch) == ball) {
-            return true;
-        }
-        return false;
+    public boolean touchWithPaddleFront(Ball ball){
+        GraphicsObject obj = canvas.getElementAt(
+                ball.getX() - ball.getWidth() , ball.getY() - ball.getHeight() / 2);
+        return obj instanceof Paddle;
     }
 
-//    public void paddleMove() {
-//        canvas.onMouseMove(i -> {
-//            paddle.move(i.getPosition());
-//        });
-//    }
+    public boolean touchWithPaddleUp(Ball ball) {
+        GraphicsObject obj = canvas.getElementAt(
+                ball.getX() - ball.getWidth() / 2, ball.getY()+ball.getWidth());
+        return obj instanceof Paddle;
+    }
+
+    public boolean touchWithPaddleDown(Ball ball) {
+        GraphicsObject obj = canvas.getElementAt(
+                ball.getX() - ball.getWidth() / 2, ball.getY() );
+        return obj instanceof Paddle;
+    }
+
+    public boolean touchWithPaddleBack(Ball ball) {
+        GraphicsObject obj = canvas.getElementAt(
+                ball.getX() , ball.getY()- ball.getHeight() / 2);
+        return obj instanceof Paddle;
+    }
+
+
 
 
     public static void main(String[] args) {

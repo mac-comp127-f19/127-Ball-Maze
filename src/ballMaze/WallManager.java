@@ -16,7 +16,7 @@ public class WallManager {
 
     public WallManager(CanvasWindow canvas){
         this.canvas = canvas;
-//        createBottomRMiddleVerticalWall();
+//       createBottomRMiddleVerticalWall();
 //        createBottomRightVerticalWall();
         createRightSideHorizontalWall();
     }
