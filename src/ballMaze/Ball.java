@@ -54,11 +54,12 @@ public class Ball extends Ellipse {
         this.setCenter(x, y);
     }
 
+
     /**
      * Makes the ball slide horizontally by slowly decreasing dx.
      */
     public void slideHorizontally(){
-        initialyVelocity = 0;
+
         if (initialxVelocity > 0) {
             initialxVelocity -= 0.5;
         }
@@ -68,6 +69,7 @@ public class Ball extends Ellipse {
         if (initialxVelocity ==0){
             this.stop();
         }
+        initialyVelocity = 0;
     }
 
     public void hit(double direction, double dt){
