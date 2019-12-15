@@ -1,9 +1,9 @@
 package ballMaze.Challenges;
 
-/**
- * A given region that the ball will experience
- * either an increase or a decrease in its speed.
- */
+import comp127graphics.GraphicsGroup;
 
-public class Accelerate {
+public interface Accelerate {
+    boolean inspectBallPosition();
+    void accelerate();
+
 }
