@@ -33,7 +33,6 @@ public class Laccelerator extends GraphicsGroup implements Accelerate {
     @Override
     public void accelerate() {
         if (inspectBallPosition()) {
-            System.out.println("ACCELERATED!!");
             ball.setDx(ball.getDx() - 0.007);
         }
     }

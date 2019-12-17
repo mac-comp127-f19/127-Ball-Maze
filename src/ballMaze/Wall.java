@@ -6,6 +6,7 @@ import comp127graphics.Rectangle;
 import java.awt.*;
 
 public class Wall extends Rectangle {
+    public static final Color color = new Color(12, 44, 24, 162);
     private double width;
     private double height;
 
@@ -13,5 +14,7 @@ public class Wall extends Rectangle {
         super(x, y, width, height);
         this.width = width;
         this.height = height;
+        this.setStrokeColor(color);
+        this.setFillColor(color);
     }
 }
