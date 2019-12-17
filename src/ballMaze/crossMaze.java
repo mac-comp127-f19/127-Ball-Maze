@@ -1,5 +1,6 @@
 package ballMaze;
 
+import ballMaze.Challenges.Laccelerator;
 import comp127graphics.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class crossMaze {
 
         this.paddle = new Paddle(400, 400, 40, 10);
 
+//        Laccelerator laccelerator = new Laccelerator(ball, 3,3);
         canvas.add(distance);
         canvas.add(ball);
         canvas.add(wallManager);
@@ -70,7 +72,7 @@ public class crossMaze {
         if (collideWithPaddleUp()){
             ball.setDy(-ball.getDy() + 0.05);
         }
-        ball.collideWithPaddle(paddle);
+//        ball.collideWithPaddle(paddle);
         touchWithBottomOfWall();
     }
 
