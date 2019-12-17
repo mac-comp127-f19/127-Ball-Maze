@@ -21,7 +21,7 @@ public class Paddle extends Rectangle{
     }
 
     public void move(Point point){
-        this.setCenter(point.getX(), y);
+        this.setCenter(point);
     }
 
     public double getx() {return x + width;};

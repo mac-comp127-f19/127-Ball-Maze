@@ -1,6 +1,5 @@
 package ballMaze;
 
-import ballMaze.Challenges.Laccelerator;
 import comp127graphics.*;
 
 import java.util.ArrayList;
@@ -14,96 +13,105 @@ public class crossMaze {
     private CanvasWindow canvas;
     private Ball ball;
     private List<GraphicsObject> objects = new ArrayList<>();
-    private GraphicsText distance = new GraphicsText();
     private WallManager wallManager;
     private Paddle paddle;
 
     public crossMaze() {
         canvas = new CanvasWindow("Ball Maze", CANVAS_WIDTH, CANVAS_HEIGHT);
-        distance.setPosition(700, 470);
+
+        this.wallManager = new WallManager(5);
 
         this.ball = new Ball(100, 300, 10);
 
-        this.wallManager = new WallManager(10);
+        this.paddle = new Paddle(400, 200, 40, 10);
 
-        this.paddle = new Paddle(400, 400, 40, 10);
-
-//        Laccelerator laccelerator = new Laccelerator(ball, 3,3);
-        canvas.add(distance);
         canvas.add(ball);
         canvas.add(wallManager);
         canvas.draw();
 
         canvas.add(paddle);
+        System.out.println(ball.getR());
+        System.out.println(ball.getWidth());
         canvas.animate(this::operateGame);
         canvas.onMouseMove(event -> paddle.move(event.getPosition()));
     }
 
-    public void updateMaxDistance() {
-        double x = 0;
-//        while (x < - wallManager.getPosition().getX()) {
-//            x = - wallManager.getPosition().getX() - 150;
-//        }
-        distance.setText("maximum distance traveled so far: " + -wallManager.getPosition().getX());
-    }
-
     /**
-     * Handles ball movement, wall movement.
-     * Handles the interaction between the ball, the canvas, and the paddle.
+     * Evaluates whether the ball is moving or hit with something.
+     * If it should stop, then it's dx and dy is set to be 0.
      */
     public void operateGame() {
         ball.move();
         animateWallManager();
-        if (touchCanvasBottom()) {
+        if (touchCanvasBottom()){
             ball.slideHorizontally();
         }
-        if (touchCanvasRight()) {
+        if (touchCanvasRight()){
             ball.setDx(0);
         }
-        if (touchCanvasLeft()) {
+        if (touchCanvasLeft()){
             ball.setDx(0);
         }
-        if (touchWithTopOfWall()) {
+        if (touchWithTopOrBottomOfWall()){
             ball.setDy(0);
         }
-        if (touchWithSidesOfWall()) {
+        if (touchWithSidesOfWall()){
             ball.setDx(0);
         }
-        if (collideWithPaddleUp()){
-            ball.setDy(-ball.getDy() + 0.05);
+        if (touchPaddleUD()){
+            ball.setDy(-ball.getDy());
         }
-//        ball.collideWithPaddle(paddle);
-        touchWithBottomOfWall();
+        if (touchPaddleLR()){
+            ball.setDx(-ball.getDx());
+        }
+
+        //TODO: touch with canvas.
     }
 
-    public boolean collideWithPaddleUp(){
+    public boolean touchPaddleUD(){
         // up
+        if (canvas.getElementAt(ball.getX(), ball.getY() - ball.getR()) == paddle){
+            ball.setPosition(ball.getX(), paddle.getY() - paddle.getHeight() / 2 - ball.getR());
+            return true;
+        }
+        // down
         if (canvas.getElementAt(ball.getX(), ball.getY() + ball.getR()) == paddle){
-                System.out.println(ball.getX() +" " + ball.getY()+ball.getR());
-                System.out.println("paddle height " + paddle.getTopY());
-            ball.setPosition(ball.getX(), 395 - ball.getR());
-                System.out.println("set position to " +ball.getPosition());
+            ball.setPosition(ball.getX(), paddle.getY() + paddle.getHeight() / 2 + ball.getR());
             return true;
         }
         return false;
     }
 
-    public boolean touchCanvasBottom() {
-        if (ball.getY() + ball.getR() > canvas.getHeight()) {
+    public boolean touchPaddleLR(){
+        // left
+        if (canvas.getElementAt(ball.getX() - ball.getR(), ball.getY()) == paddle){
+            ball.setPosition(paddle.getX() - ball.getR() - paddle.getWidth()/2, ball.getY());
+            return true;
+        }
+        // right
+        if (canvas.getElementAt(ball.getX() + ball.getR(), ball.getY()) == paddle){
+            ball.setPosition(paddle.getX() + ball.getR() + paddle.getWidth()/2, ball.getY());
             return true;
         }
         return false;
     }
 
-    public boolean touchCanvasRight() {
-        if (ball.getX() + ball.getR() > canvas.getWidth()) {
+    public boolean touchCanvasBottom(){
+        if (ball.getY() + ball.getR() > canvas.getHeight()){
             return true;
         }
         return false;
     }
 
-    public boolean touchCanvasLeft() {
-        if (ball.getX() - ball.getR() < 0) {
+    public boolean touchCanvasRight(){
+        if (ball.getX() + ball.getR() > canvas.getWidth()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean touchCanvasLeft(){
+        if (ball.getX() - ball.getR() < 0){
             return true;
         }
         return false;
@@ -112,7 +120,6 @@ public class crossMaze {
 
     public void animateWallManager() {
         wallManager.setPosition(-ball.getX() - 30, 0);
-//        updateMaxDistance();
     }
 
     /**
@@ -142,27 +149,19 @@ public class crossMaze {
      *
      * @return true if the ball touches the wall.
      */
-    public boolean touchWithTopOfWall() {
+    public boolean touchWithTopOrBottomOfWall() {
         Point up = new Point(ball.getX(), ball.getY() - ball.getR());
-//        Point down = new Point(ball.getX(), ball.getY() + ball.getR());
-//        List<Point> points = new ArrayList<>(Arrays.asList(up, down));
+        Point down = new Point(ball.getX(), ball.getY() + ball.getR());
+        List<Point> points = new ArrayList<>(Arrays.asList(up, down));
 
-//        for (Point point : points) {
+        for (Point point : points) {
             for (Wall i : wallManager.getWallList()) {
-                if (canvas.getElementAt(up) == i) {
+                if (canvas.getElementAt(point) == i) {
                     return true;
                 }
-//            }
-        }
-        return false;
-    }
-
-    public void touchWithBottomOfWall(){
-        for (Wall i : wallManager.getWallList()){
-            if (canvas.getElementAt(ball.getX(), ball.getY() + ball.getR()) == i){
-                ball.setDy(-ball.getDy());
             }
         }
+        return false;
     }
 
     public static void main(String[] args) {

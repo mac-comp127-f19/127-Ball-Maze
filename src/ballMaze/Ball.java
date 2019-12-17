@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public class Ball extends Ellipse {
     private static final Color darkRed = new Color(48, 19, 5, 255);
-    private static final double GRAVITY = -0.0001;
+    private static final double GRAVITY = -0.1;
 
     private double dx;
     private double dy;
@@ -22,8 +22,8 @@ public class Ball extends Ellipse {
         this.x = x;
         this.y = y;
         this.r = r;
-        dx = 0.1;
-        dy = 0.1;
+        dx = 1;
+        dy = 1;
         this.setFillColor(darkRed);
     }
 
