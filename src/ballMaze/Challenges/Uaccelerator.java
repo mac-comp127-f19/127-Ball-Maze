@@ -4,8 +4,6 @@ import ballMaze.Ball;
 import comp127graphics.GraphicsGroup;
 import comp127graphics.Image;
 
-import java.awt.*;
-
 public class Uaccelerator extends GraphicsGroup implements Accelerate {
     private static final double MAXHEIGHT = 150;
     private static final double MAXWIDTH = 40;
@@ -25,7 +23,7 @@ public class Uaccelerator extends GraphicsGroup implements Accelerate {
     }
 
     @Override
-    public boolean inspectBallPosition() {
+    public boolean enterAccelerationArea() {
         if (x < ball.getX() && ball.getX() < x + MAXWIDTH) {
             return y < ball.getY() && ball.getY() < y + MAXHEIGHT;
         }
@@ -34,7 +32,7 @@ public class Uaccelerator extends GraphicsGroup implements Accelerate {
 
     @Override
     public void accelerate() {
-        if (inspectBallPosition()) {
+        if (enterAccelerationArea()) {
             ball.setDy(ball.getDy() - 0.007);
         }
     }

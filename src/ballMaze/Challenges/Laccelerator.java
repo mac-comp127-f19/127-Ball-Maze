@@ -23,7 +23,7 @@ public class Laccelerator extends GraphicsGroup implements Accelerate {
     }
 
     @Override
-    public boolean inspectBallPosition() {
+    public boolean enterAccelerationArea() {
         if (x < ball.getX() && ball.getX() < x + MAXWIDTH) {
             return y < ball.getY() && ball.getY() < y + MAXHEIGHT;
         }
@@ -32,7 +32,7 @@ public class Laccelerator extends GraphicsGroup implements Accelerate {
 
     @Override
     public void accelerate() {
-        if (inspectBallPosition()) {
+        if (enterAccelerationArea()) {
             ball.setDx(ball.getDx() - 0.007);
         }
     }

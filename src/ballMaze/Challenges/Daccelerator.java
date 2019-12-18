@@ -4,8 +4,6 @@ import ballMaze.Ball;
 import comp127graphics.GraphicsGroup;
 import comp127graphics.Image;
 
-import java.awt.*;
-
 /**
  * An acceleration in the downward direction.
  */
@@ -32,7 +30,7 @@ public class Daccelerator extends GraphicsGroup implements Accelerate{
      * Loops over all the points in the acceleration area to see if there is an object belongs to Ball class.
      * @return true if there is. Otherwise false.
      */
-    public boolean inspectBallPosition() {
+    public boolean enterAccelerationArea() {
         if (x < ball.getX() && ball.getX() < x + MAXWIDTH) {
             return y < ball.getY() && ball.getY() < y + MAXHEIGHT;
         }
@@ -43,7 +41,7 @@ public class Daccelerator extends GraphicsGroup implements Accelerate{
      * Sets the velocity of the ball to be twice of its initial velocity.
      */
     public void accelerate(){
-        if (inspectBallPosition()) {
+        if (enterAccelerationArea()) {
             System.out.println("ACCELERATED!!");
             ball.setDy(ball.getDy() + 0.007);
         }

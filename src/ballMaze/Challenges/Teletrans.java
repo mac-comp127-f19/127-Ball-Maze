@@ -27,7 +27,7 @@ public class Teletrans extends GraphicsGroup{
     private GraphicsText s; // for Start 起始点
     private GraphicsText f; // for Finish 终点
 
-    public Teletrans(GraphicsObject object){
+    public Teletrans(GraphicsObject object, double x, double y){
         double xi = 20;
         double xf = 100;
         double width = 20;
