@@ -15,11 +15,10 @@ public class crossMaze {
     private List<GraphicsObject> objects = new ArrayList<>();
     private WallManager wallManager;
     private Paddle paddle;
-    private int lives =  5;
+    private int lives = 5;
     private GraphicsText lostText = new GraphicsText("Lost feels bad -___-");
     private GraphicsText winText = new GraphicsText("Winner Winner, Wall Dinner !!!");
     private GraphicsText livesLeft = new GraphicsText("You still have " + lives + "lives ");
-
 
 
     public crossMaze() {
@@ -34,80 +33,83 @@ public class crossMaze {
      */
     public void operateGame() {
         this.wallManager = new WallManager(5);
-        this.ball = new Ball(20, 0, 10);
+        this.ball = new Ball(20, 50, 10);
         this.paddle = new Paddle(400, 200, 55, 20);
 
         canvas.add(wallManager);
-        canvas.draw();
         canvas.add(paddle);
+//        canvas.draw();
         canvas.animate(() -> {
-            ballmove(ball);
-            if (losingOnelife()) {
-                canvas.removeAll();
-                livesLeft.setCenter(CANVAS_WIDTH * 0.5, 50);
-                lives--;
-                livesLeft.setText("You still have " + lives + " lives.");
-                canvas.add(livesLeft);
-                operateGame();
-            }
-            else if (lost()){
-                lostText.setCenter(CANVAS_WIDTH * 0.5, 500);
-                canvas.add(lostText);
-                movementAfterlost(ball);
+                    ballmove(ball);
+                    animateWallManager();
+                    if (loseOnelife()) {
+                        canvas.removeAll();
+                        livesLeft.setCenter(ball.getX(), 50);
+                        lives--;
+                        livesLeft.setText("You still have " + lives + " lives.");
+                        canvas.add(livesLeft);
+//                        operateGame();
+                    } else if (lost()) {
+                        lostText.setCenter(CANVAS_WIDTH * 0.5, 500);
+                        canvas.add(lostText);
+                        movementAfterlost(ball);
                     }
                 }
         );
-        ballmove(ball);
         canvas.onMouseMove(event -> paddle.move(event.getPosition()));
-        animateWallManager();
-
-        //TODO: touch with canvas.
     }
 
-    public boolean touchPaddleUD(){
+    public boolean touchPaddleUD() {
         // up
-        if (canvas.getElementAt(ball.getX(), ball.getY() - ball.getR()) == paddle){
+        if (canvas.getElementAt(ball.getX(), ball.getY() - ball.getR()) == paddle) {
             ball.setPosition(ball.getX(), paddle.getY() + paddle.getHeight() / 2 + ball.getR());
             return true;
         }
         // down
-        if (canvas.getElementAt(ball.getX(), ball.getY() + ball.getR()) == paddle){
+        if (canvas.getElementAt(ball.getX(), ball.getY() + ball.getR()) == paddle) {
             ball.setPosition(ball.getX(), paddle.getY() - paddle.getHeight() / 2 - ball.getR());
             return true;
         }
         return false;
     }
 
-    public boolean touchPaddleLR(){
+    public boolean touchPaddleLR() {
         // right
-        if (canvas.getElementAt(ball.getX() + ball.getR(), ball.getY()) == paddle){
+        if (canvas.getElementAt(ball.getX() + ball.getR(), ball.getY()) == paddle) {
             ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
             return true;
         }
         // left
-        if (canvas.getElementAt(ball.getX() - ball.getR(), ball.getY()) == paddle){
+        if (canvas.getElementAt(ball.getX() - ball.getR(), ball.getY()) == paddle) {
             ball.setCenter(paddle.getX() + ball.getR() + paddle.getWidth(), ball.getY());
             return true;
         }
         return false;
     }
 
-    public boolean touchCanvasBottom(){
-        if (ball.getY() + ball.getR() > canvas.getHeight()){
+    public boolean touchCanvasBottom() {
+        if (ball.getY() + ball.getR() > canvas.getHeight()) {
             return true;
         }
         return false;
     }
 
-    public boolean touchCanvasRight(){
-        if (ball.getX() + ball.getR() > canvas.getWidth()){
+    public boolean touchCanvasRight() {
+        if (ball.getX() + ball.getR() > canvas.getWidth()) {
             return true;
         }
         return false;
     }
 
-    public boolean touchCanvasLeft(){
-        if (ball.getX() - ball.getR() < 0){
+    public boolean touchCanvasTop() {
+        if (ball.getY() - ball.getR() < 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean touchCanvasLeft() {
+        if (ball.getX() - ball.getR() < 0) {
             return true;
         }
         return false;
@@ -164,7 +166,6 @@ public class crossMaze {
         canvas.add(ball);
         ball.move();
         canvas.draw();
-        canvas.pause(4250);
         canvas.closeWindow();
     }
 
@@ -172,35 +173,37 @@ public class crossMaze {
         return lives < 1;
     }
 
-    private boolean losingOnelife() {
-        return (ball.getY() + ball.getR()) > canvas.getHeight() -10;
+    private boolean loseOnelife() {
+        return (ball.getY() + ball.getR()) > canvas.getHeight();
     }
 
-    private void ballmove(Ball ball){
+    private void ballmove(Ball ball) {
         canvas.add(ball);
         ball.move();
         canvas.draw();
-        canvas.pause(40);
-        if (touchCanvasBottom()){
+        if (touchCanvasBottom()) {
             ball.slideHorizontally();
         }
-        if (touchCanvasRight()){
+        if (touchCanvasRight()) {
             ball.setDx(0);
         }
-        if (touchCanvasLeft()){
+        if (touchCanvasLeft()) {
             ball.setDx(0);
         }
-        if (touchWithTopOrBottomOfWall()){
+        if (touchWithTopOrBottomOfWall()) {
             ball.setDy(0);
         }
-        if (touchWithSidesOfWall()){
+        if (touchWithSidesOfWall()) {
             ball.setDx(0);
         }
-        if (touchPaddleUD()){
+        if (touchPaddleUD()) {
             ball.setDy(-ball.getDy());
         }
-        if (touchPaddleLR()){
+        if (touchPaddleLR()) {
             ball.setDx(-ball.getDx());
+        }
+        if (touchCanvasTop()) {
+            ball.setDy(-ball.getDy());
         }
     }
 
