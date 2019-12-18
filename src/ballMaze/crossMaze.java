@@ -78,12 +78,12 @@ public class crossMaze {
     public boolean touchPaddleLR() {
         // right
         if (canvas.getElementAt(ball.getX() + ball.getR(), ball.getY()) == paddle) {
-//            ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
+            ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
             return true;
         }
         // left
         if (canvas.getElementAt(ball.getX() - ball.getR(), ball.getY()) == paddle) {
-//            ball.setCenter(paddle.getX() + ball.getR() + paddle.getWidth(), ball.getY());
+            ball.setCenter(paddle.getX() + ball.getR() + paddle.getWidth(), ball.getY());
             return true;
         }
         return false;
