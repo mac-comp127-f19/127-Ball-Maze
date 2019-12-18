@@ -17,7 +17,7 @@ public class Paddle extends Rectangle{
         this.y = y;
         this.width = width;
         this.height = height;
-        this.setFillColor(Color.black);
+//        this.setFillColor(Color.black);
     }
 
     public void move(Point point){
