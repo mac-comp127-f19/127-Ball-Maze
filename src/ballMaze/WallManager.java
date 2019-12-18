@@ -22,6 +22,10 @@ public class WallManager extends GraphicsGroup {
         drawRandomWalls(n);
     }
 
+    /**
+     * Draw random walls in fixed grids.
+     */
+
     public void drawRandomWalls(int n) {
         Random random = new Random();
 
@@ -58,6 +62,7 @@ public class WallManager extends GraphicsGroup {
     /**
      * Initialize the map for the other grids with coordinate (n * w, 0), (n * w, h)
      */
+
     public void initializeWallCoor(int n) {
         double x = GRID_WIDTH * n;
         // 4 vertical walls set on the right side of the two grids. 2 for each grid.

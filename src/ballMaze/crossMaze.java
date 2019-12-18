@@ -86,7 +86,10 @@ public class crossMaze {
         });
     }
 
-
+    /**
+     * Evaluate the contact between the upper and bottom sides of the paddle
+     * and the ball.
+     */
 
     public boolean touchPaddleUD() {
         // up
@@ -102,6 +105,11 @@ public class crossMaze {
         return false;
     }
 
+    /**
+     * Evaluate the contact between the right and left sides of the paddle
+     * and the ball.
+     */
+
     public boolean touchPaddleLR() {
         // right
         if (canvas.getElementAt(ball.getX(), ball.getY()) == paddle) {
@@ -115,6 +123,12 @@ public class crossMaze {
         }
         return false;
     }
+
+    /**
+     * Evaluate the contact between the canvas and the ball.
+     *
+     * @return true if they have contacts with each other.
+     */
 
     public boolean touchCanvasBottom() {
         if (ball.getY() + ball.getR() > canvas.getHeight()) {
@@ -206,6 +220,11 @@ public class crossMaze {
         return (ball.getY() + ball.getR()) > canvas.getHeight();
     }
 
+    /**
+     * Change the motions of the ball by evaluating the different
+     * objects and directions that ball makes a contact with.
+     */
+
     private void ballmove(Ball ball) {
         canvas.add(ball);
         ball.move();
@@ -235,6 +254,10 @@ public class crossMaze {
             ball.setDy(-ball.getDy());
         }
     }
+
+    /**
+     * Generate different and random challenges shown on the canvas
+     */
 
     public GraphicsGroup generateChallengeGroup(){
         Random random = new Random();

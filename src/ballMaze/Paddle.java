@@ -11,6 +11,17 @@ public class Paddle extends Rectangle{
     private double width;
     private double height;
 
+    /**
+     * Creates a rectangle-liked paddle.
+     *
+     * @param x        The upper left point's x position
+     * @param y        The upper left point's y position
+     * @param width    The width of the paddle
+     * @param height   The height of the paddle
+     *
+     */
+
+
     public Paddle(double x, double y, double width, double height){
         super(x, y, width, height);
         this.x = x;

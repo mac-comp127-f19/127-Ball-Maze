@@ -6,6 +6,7 @@ import comp127graphics.Image;
 /**
  * Enemies wandering in the maze.
  * The user should try avoid these enemies. Otherwise, they lose one live.
+ * We haven't finished it yet and it's' beyond our abilities right now.
  */
 
 public class Enemy extends GraphicsGroup {

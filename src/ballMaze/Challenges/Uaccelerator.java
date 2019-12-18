@@ -4,6 +4,10 @@ import ballMaze.Ball;
 import comp127graphics.GraphicsGroup;
 import comp127graphics.Image;
 
+/**
+ * A region that the ball will experience an upper acceleration.
+ */
+
 public class Uaccelerator extends GraphicsGroup implements Accelerate {
     private static final double MAXHEIGHT = 150;
     private static final double MAXWIDTH = 40;

@@ -4,11 +4,16 @@ import ballMaze.Ball;
 import comp127graphics.GraphicsGroup;
 import comp127graphics.Image;
 
+/**
+ * A region that the ball will experience an left cceleration.
+ */
+
 public class Laccelerator extends GraphicsGroup implements Accelerate {
     private static final double MAXHEIGHT = 40;
     private static final double MAXWIDTH = 150;
     private Ball ball;
     private double x, y;
+
 
     public Laccelerator(Ball ball, double x, double y) {
         this.ball = ball;
