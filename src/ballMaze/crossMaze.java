@@ -1,10 +1,12 @@
 package ballMaze;
 
+import ballMaze.Challenges.*;
 import comp127graphics.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class crossMaze {
     private static final int CANVAS_WIDTH = 1000;
@@ -48,7 +50,7 @@ public class crossMaze {
                         lives--;
                         livesLeft.setText("You still have " + lives + " lives.");
                         canvas.add(livesLeft);
-//                        operateGame();
+                        operateGame();
                     } else if (lost()) {
                         lostText.setCenter(CANVAS_WIDTH * 0.5, 500);
                         canvas.add(lostText);
@@ -62,12 +64,12 @@ public class crossMaze {
     public boolean touchPaddleUD() {
         // up
         if (canvas.getElementAt(ball.getX(), ball.getY() - ball.getR()) == paddle) {
-            ball.setPosition(ball.getX(), paddle.getY() + paddle.getHeight() / 2 + ball.getR());
+//            ball.setPosition(ball.getX(), paddle.getY() + paddle.getHeight() / 2 + ball.getR());
             return true;
         }
         // down
         if (canvas.getElementAt(ball.getX(), ball.getY() + ball.getR()) == paddle) {
-            ball.setPosition(ball.getX(), paddle.getY() - paddle.getHeight() / 2 - ball.getR());
+//            ball.setPosition(ball.getX(), paddle.getY() - paddle.getHeight() / 2 - ball.getR());
             return true;
         }
         return false;
@@ -76,12 +78,12 @@ public class crossMaze {
     public boolean touchPaddleLR() {
         // right
         if (canvas.getElementAt(ball.getX() + ball.getR(), ball.getY()) == paddle) {
-            ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
+//            ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
             return true;
         }
         // left
         if (canvas.getElementAt(ball.getX() - ball.getR(), ball.getY()) == paddle) {
-            ball.setCenter(paddle.getX() + ball.getR() + paddle.getWidth(), ball.getY());
+//            ball.setCenter(paddle.getX() + ball.getR() + paddle.getWidth(), ball.getY());
             return true;
         }
         return false;
@@ -207,7 +209,38 @@ public class crossMaze {
         }
     }
 
-    public static void main(String[] args) {
+    public GraphicsGroup generateGraphicsGroup(){
+        Random random = new Random();
+        int n = random.nextInt(6);
+        int x = random.nextInt(10000);
+        while (x < 100) {
+            x = random.nextInt(10000);
+        }
+        int y = random.nextInt(400);
+        while (y < 100){
+            y = random.nextInt(400);
+        }
+        if (n == 0){
+            return new Antigravity(x, y, ball);
+        }
+        if (n == 1){
+            return new Laccelerator(ball, x, y);
+        }
+        if (n == 2){
+            return new Raccelerator(ball, x, y);
+        }  if (n == 3){
+            return new Uaccelerator(ball, x, y);
+        }
+        if (n == 4){
+            return new Daccelerator(ball, x, y);
+        }
+        if (n == 5){
+            return new Teletrans(ball, x, y);
+        }
+        return null;
+    }
+
+            public static void main(String[] args) {
         new crossMaze();
     }
 }
