@@ -34,19 +34,20 @@ public class crossMaze {
      * If it should stop, then it's dx and dy is set to be 0.
      */
     public void operateGame() {
-        this.wallManager = new WallManager(5);
-        this.ball = new Ball(20, 50, 10);
+        this.wallManager = new WallManager(10);
+        this.ball = new Ball(50, 50, 10);
         this.paddle = new Paddle(400, 200, 55, 20);
 
         canvas.add(wallManager);
-        canvas.add(paddle);
+        wallManager.add(generateChallengeGroup());
+//        canvas.add(paddle);
 //        canvas.draw();
         canvas.animate(() -> {
                     ballmove(ball);
                     animateWallManager();
                     if (loseOnelife()) {
-                        canvas.removeAll();
-                        livesLeft.setCenter(ball.getX(), 50);
+//                        canvas.removeAll();
+                        livesLeft.setCenter(ball.getX(), 80);
                         lives--;
                         livesLeft.setText("You still have " + lives + " lives.");
                         canvas.add(livesLeft);
@@ -58,8 +59,34 @@ public class crossMaze {
                     }
                 }
         );
-        canvas.onMouseMove(event -> paddle.move(event.getPosition()));
+        trackMouseMovement();
+//        canvas.onMouseMove(event -> paddle.move(event.getPosition()));
     }
+
+    // ---------- backup to paddle ------------
+    public void trackMouseMovement(){
+        canvas.onClick(event -> {
+            Point position = event.getPosition();
+            if (Math.abs(position.getX() - ball.getX()) > Math.abs(position.getY() - ball.getY())){
+                if (position.getX() > ball.getX()) {
+                    ball.setDx(ball.getDx() - 0.2);
+                }
+                if (position.getX() < ball.getX()){
+                    ball.setDx(ball.getDx() + 0.2);
+                }
+            }
+            else{
+                if (position.getY() > ball.getY()){
+                    ball.setDy(ball.getDy() - 0.5);
+                }
+                if (position.getY() < ball.getY()){
+                    ball.setDy(ball.getDy() + 0.2);
+                }
+            }
+        });
+    }
+
+
 
     public boolean touchPaddleUD() {
         // up
@@ -77,8 +104,8 @@ public class crossMaze {
 
     public boolean touchPaddleLR() {
         // right
-        if (canvas.getElementAt(ball.getX() + ball.getR(), ball.getY()) == paddle) {
-            ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
+        if (canvas.getElementAt(ball.getX(), ball.getY()) == paddle) {
+//            ball.setCenter(paddle.getX() - ball.getR(), ball.getY());
             return true;
         }
         // left
@@ -209,12 +236,12 @@ public class crossMaze {
         }
     }
 
-    public GraphicsGroup generateGraphicsGroup(){
+    public GraphicsGroup generateChallengeGroup(){
         Random random = new Random();
         int n = random.nextInt(6);
-        int x = random.nextInt(10000);
+        int x = random.nextInt(500);
         while (x < 100) {
-            x = random.nextInt(10000);
+            x = random.nextInt(300);
         }
         int y = random.nextInt(400);
         while (y < 100){

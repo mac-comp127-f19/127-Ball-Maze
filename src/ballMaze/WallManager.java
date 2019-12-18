@@ -40,6 +40,13 @@ public class WallManager extends GraphicsGroup {
             this.add(wall2);
             wallList.add(wall1);
             wallList.add(wall2);
+            int c = random.nextInt(6);
+//            if (c == 3){
+//                this.add(ChallengeGroup.generateRandomElement(GRID_WIDTH*n + GRID_WIDTH, GRID_HEIGHT * 1.5));
+//            }
+//            if (c == 4){
+//                this.add(ChallengeGroup.generateRandomElement(GRID_WIDTH*n + GRID_WIDTH, GRID_HEIGHT*0.5));
+//            }
         }
 
     }
